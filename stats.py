@@ -49,6 +49,8 @@ def metropolis_X_theta(X, Y, phi, tau, xi, epsilon_t, random_walk_stds):
         new_phi, new_tau, new_xi  = random_walk_on_params(phi, tau, xi, random_walk_stds)
         new_theta_density = pi_n(new_phi, new_tau, new_xi)
         new_X = X_update(X, new_phi, new_tau, new_xi)
+        if np.sum(new_X) == 0: # If the new X is empty, we reject it
+            continue
         acceptance_proba = min(1, X_in_A(Y, new_X, epsilon_t)*new_theta_density/theta_density)
 
         if acceptance_proba >= np.random.uniform(): 
