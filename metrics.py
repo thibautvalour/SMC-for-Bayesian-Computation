@@ -24,4 +24,4 @@ def ESS(W):
     return 1/np.sum(W**2)
 
 def prop_alive_func(Ws):
-    return np.sum(Ws>0)/len(Ws)
+    return np.sum(Ws>0)/Ws.shape[0]
