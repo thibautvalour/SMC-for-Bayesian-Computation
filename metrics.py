@@ -13,12 +13,15 @@ def rho(eta, eta_bar, n):
                np.abs(eta[1] - eta_bar[1]))
     return result
 
-def X_in_A(Y, X, epsilon):
-    eta_1_Y, eta_2_Y = eta(Y)
+def distance(X, Y):
     eta_1_X, eta_2_X = eta(X)
+    eta_1_Y, eta_2_Y = eta(Y)
     pop_in_X = np.sum(X)
     distance = rho((eta_1_X, eta_2_X), (eta_1_Y, eta_2_Y), pop_in_X)
-    return distance <= epsilon
+    return distance
+
+def X_in_A(Y, X, epsilon):
+    return distance(X, Y) <= epsilon
 
 def ESS(W):
     return 1/np.sum(W**2)
