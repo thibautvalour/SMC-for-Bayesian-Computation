@@ -62,6 +62,6 @@ while epsilon_t > epsilon_final: # Main loop
 
     # print results
     print(f'loop = {t}; loop time : {round(time.time() - step_start)}s; total_time : {round(time.time() - start)}s')
-    print(f'espilon = {round(epsilon_t, 6)}; epsilon_target = {epsilon_final}')
+    print(f'epsilon = {round(epsilon_t, 6)}; epsilon_target = {epsilon_final}')
 
     t+=1
