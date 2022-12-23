@@ -26,8 +26,8 @@ def pi_n(phi, tau, xi):
     return theta_density
 
 def X_update(X, phi, tau, xi):
-    total_pop = np.sum(X)
     new_X = X.copy()
+    total_pop = np.sum(X)
     genom_affected = np.random.choice(range(len(X)),
                                       p=[genom_pop/total_pop for genom_pop in X])
     normalize_coeff = phi + tau + xi
@@ -49,6 +49,7 @@ def metropolis_X_theta(X, Y, phi, tau, xi, epsilon_t, random_walk_stds):
         new_phi, new_tau, new_xi  = random_walk_on_params(phi, tau, xi, random_walk_stds)
         new_theta_density = pi_n(new_phi, new_tau, new_xi)
         new_X = X_update(X, new_phi, new_tau, new_xi)
-        acceptance_proba = min(1, X_in_A(Y, new_X, epsilon_t)*new_theta_density/theta_density)
-        if not(np.sum(new_X) == 0) and acceptance_proba >= np.random.uniform() :
-            return new_X, new_phi, new_tau, new_xi
+        if not(np.sum(new_X) == 0): # If the new X is not empty
+            acceptance_proba = min(1, X_in_A(Y, new_X, epsilon_t)*new_theta_density/theta_density)
+            if  acceptance_proba >= np.random.uniform() :
+                return new_X, new_phi, new_tau, new_xi
