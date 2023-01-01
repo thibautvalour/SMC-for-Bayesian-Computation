@@ -21,7 +21,7 @@ if __name__ == "__main__":
     Ws = 1/N * np.ones(N)
     prop_alive = prop_alive_func(Ws)
     thetas = np.array([sampling_params() for _ in range(N)])
-    results = {'Xs': [Xs], 'Ws': [Ws], 'thetas': [thetas], 'epsilon_list': [epsilon_t]}
+    results = {'Xs': [Xs.copy()], 'Ws': [Ws.copy()], 'thetas': [thetas.copy()], 'epsilon_list': [epsilon_t]}
     start = time.time()
 
     for _ in range(2): # Updates before the main loop so the Xs are not all the same at the beginning
@@ -72,17 +72,16 @@ if __name__ == "__main__":
             thetas[idx_oi] = tuple(result[idx][1:])
         
         # save results 
-        results['Xs'].append(Xs)
-        results['Ws'].append(Ws)
-        results['thetas'].append(thetas)
+        results['Xs'].append(Xs.copy())
+        results['Ws'].append(Ws.copy())
+        results['thetas'].append(thetas.copy())
         results['epsilon_list'].append(epsilon_t)
 
         #update result file
+        t+=1
         if t%100==0:
-            np.save('results.npy', results)
+            np.save('results_8.npy', results)
 
         # print results
         # print(f'loop = {t}; loop time : {round(time.time() - step_start, 3)}s; total_time : {round(time.time() - start)}s')
         pbar.set_description(f'epsilon = {round(epsilon_t, 6)}; epsilon_target = {epsilon_final}')
-
-        t+=1
